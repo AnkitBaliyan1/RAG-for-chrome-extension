@@ -10,6 +10,10 @@ from langchain_openai import ChatOpenAI
 
 from langchain import HuggingFaceHub
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 def prepare_db(link):
   loader = WebBaseLoader(link)
   transcript = loader.load()
