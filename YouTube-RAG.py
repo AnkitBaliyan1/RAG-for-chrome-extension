@@ -21,12 +21,11 @@ def prepare_db(video_link):
   transcript = loader.load()
 
   text_splitter = RecursiveCharacterTextSplitter(
-    # Set a really small chunk size, just to show.
     chunk_size=256,
     chunk_overlap=10,
     length_function=len,
     is_separator_regex=False,
-)
+  )
   split_docs = text_splitter.split_documents(transcript)
 
   db = Chroma.from_documents(split_docs, OpenAIEmbeddings())
@@ -44,7 +43,8 @@ def get_answer(query, db):
   return answer
 
 
-video_link = "https://www.youtube.com/watch?v=aircAruvnKk"
-loader = YoutubeLoader.from_youtube_url(
-    video_link, add_video_info=False
-)
+db = prepare_db("https://www.youtube.com/watch?v=MQV4LR6jh1w")
+query = "How to transition into Data Analyst ??"
+answer = get_answer(query, db)
+
+print(answer)
